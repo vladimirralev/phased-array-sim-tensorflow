@@ -114,7 +114,7 @@ for i in range(10000):
     UasArray= Ucurrent[0]
     UasArray[Sources[p][0],Sources[p][1]]=1
     nstep = tf.group(U.assign(UasArray))
-    nstep.run({eps: 0.2, damping: 0.001})
+    nstep.run()
   
   DisplayArray(U.eval(), rng=[-0.1, 0.1])
 
