@@ -99,8 +99,7 @@ NumSources = 64
 DistanceBetweenSources = 2
 BaseY = 410
 BaseX = N/2 - NumSources*DistanceBetweenSources/2
-for i in range(NumSources):
-    Sources.append((BaseY,BaseX+i*DistanceBetweenSources))
+Sources = [(BaseY, BaseX+i*DistanceBetweenSources) for i in range(0, NumSources)]
 
 # Run 10000 steps of PDE
 for i in range(10000):
@@ -108,13 +107,13 @@ for i in range(10000):
   step.run({eps: 0.05, damping: 0.01})
     
   # At every time step,ovie check if a new source must be added
-  if i%PhaseDelay == 0 and p<NumSources-1 :
-    p = p + 1
+  if i%PhaseDelay == 0 and p<NumSources :
     Ucurrent = U.eval(),
     UasArray= Ucurrent[0]
     UasArray[Sources[p][0],Sources[p][1]]=1
     nstep = tf.group(U.assign(UasArray))
     nstep.run()
+    p = p + 1
   
   DisplayArray(U.eval(), rng=[-0.1, 0.1])
 
